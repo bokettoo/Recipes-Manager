@@ -5,8 +5,11 @@ import pymysql
 import random
 from ttkthemes import ThemedStyle
 import datetime
-passwd = ""
-
+password = ""
+host = '127.0.0.1'
+user = "root"
+database = "recipe_db"
+database_table=["recipes","recipe_types"]
 class RecipesManager:
     def __init__(self, root):
         self.root = root
@@ -74,10 +77,10 @@ class RecipesManager:
     
     @staticmethod
     def recipe_count():
-        conn = pymysql.connect(host='127.0.0.1', user='root', password=passwd, db='recipe_db')
+        conn = pymysql.connect(host=host, user=user, password=password, db=database)
         c= conn.cursor()
 
-        query= "SELECT * FROM recipes"
+        query= f"SELECT * FROM {database_table[0]}"
 
         c.execute(query)
 
@@ -232,10 +235,10 @@ class RecipesManager:
             return
 
         try:
-            conn = pymysql.connect(host='127.0.0.1', user='root', password=passwd, db='recipe_db')
+            conn = pymysql.connect(host=host, user=user, password=password, db=database)
             c = conn.cursor()
-            query_1 = "INSERT INTO recipes (name, ingredients, instructions) VALUES (%s, %s, %s)"
-            query_2 = "INSERT INTO recipe_types (id,type) VALUES (%s, %s)"
+            query_1 = f"INSERT INTO {database_table[0]} (name, ingredients, instructions) VALUES (%s, %s, %s)"
+            query_2 = f"INSERT INTO {database_table[1]} (id,type) VALUES (%s, %s)"
             c.execute(query_1, (name, ingredients, instructions))
             conn.commit()
             recipe_id = c.lastrowid
@@ -293,11 +296,11 @@ class RecipesManager:
         else:
 
             try:
-                conn = pymysql.connect(host='127.0.0.1', user='root', password=passwd, db='recipe_db')
+                conn = pymysql.connect(host=host, user=user, password=password, db=database)
                 
                 c=conn.cursor() 
                 
-                query = "SELECT * FROM recipe_types WHERE `type`=%s"
+                query = f"SELECT * FROM {database_table[1]} WHERE `type`=%s"
                 
                 c.execute(query,selected_value)
                 
@@ -311,7 +314,7 @@ class RecipesManager:
                 random_type = rows[random_index]
                 
 
-                query = "SELECT * FROM recipes WHERE `id`=%s"
+                query = f"SELECT * FROM {database_table[0]} WHERE `id`=%s"
                 c.execute(query,random_type[0])
                 sub_rows = c.fetchall()
 
@@ -358,7 +361,7 @@ class RecipesManager:
 
     def search_results(self,recipe_name):
         try:
-            conn = pymysql.connect(host='127.0.0.1', user='root', password=passwd, db='recipe_db')
+            conn = pymysql.connect(host=host, user=user, password=password, db=database)
 
             c = conn.cursor()
 
@@ -446,11 +449,11 @@ class RecipesManager:
             if selected_value == "All":
 
                 try:
-                    conn = pymysql.connect(host='127.0.0.1', user='root', password=passwd, db='recipe_db')
+                    conn = pymysql.connect(host=host, user=user, password=password, db=database)
 
                     c = conn.cursor()
 
-                    c.execute("SELECT * FROM recipes")
+                    c.execute(f"SELECT * FROM {database_table[0]}")
 
                     self.tree_view.delete(*self.tree_view.get_children())
 
@@ -464,11 +467,11 @@ class RecipesManager:
                     messagebox.showerror("Error", str(e))
             else:
                 try:
-                    conn = pymysql.connect(host='127.0.0.1', user='root', password=passwd, db='recipe_db')
+                    conn = pymysql.connect(host=host, user=user, password=password, db=database)
                     
                     c=conn.cursor() 
                     
-                    query = "SELECT * FROM recipe_types WHERE `type`=%s"
+                    query = f"SELECT * FROM {database_table[1]} WHERE `type`=%s"
                     
                     c.execute(query,selected_value)
                     
@@ -500,9 +503,9 @@ class RecipesManager:
         selected_recipe = self.tree_view.focus()
         recipe=self.tree_view.item(selected_recipe)['values']
         try:
-            conn = pymysql.connect(host='127.0.0.1', user='root', password=passwd, db='recipe_db')
+            conn = pymysql.connect(host=host, user=user, password=password, db=database)
             c = conn.cursor()
-            query = "UPDATE recipes SET `name` = %s, `ingredients` = %s, `instructions` = %s WHERE id = %s;"
+            query = f"UPDATE {database_table[0]} SET `name` = %s, `ingredients` = %s, `instructions` = %s WHERE id = %s;"
             c.execute(query,(self.name_entry_pop.get(),self.ingredients_entry_pop.get("1.0", tk.END),self.instructions_entry_pop.get("1.0", tk.END),recipe[0]))
             conn.commit()
             messagebox.showinfo("Success", "Recipe updated successfully.")
@@ -516,11 +519,11 @@ class RecipesManager:
             recipe_name = self.tree_view.item(selected_recipe)['values'][1]
 
             try:
-                conn = pymysql.connect(host='127.0.0.1', user='root', password=passwd, db='recipe_db')
+                conn = pymysql.connect(host=host, user=user, password=password, db=database)
 
                 c = conn.cursor()
 
-                c.execute("DELETE FROM recipes WHERE name=%s", (recipe_name,))
+                c.execute(f"DELETE FROM {database_table[0]} WHERE name=%s", (recipe_name,))
 
                 conn.commit()
 
