@@ -34,4 +34,3 @@ Recipes Manager is a desktop application built using Python and Tkinter framewor
 ## Credits
 This application is developed by Boketto and is open-source. Contributions and feedback are welcome.
 
-**Note**: Replace `[Your Name]` with your name or organization name.
