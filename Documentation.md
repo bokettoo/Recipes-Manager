@@ -29,11 +29,9 @@ Recipes Manager is a desktop application built using Python and Tkinter framewor
 5. **Manage Recipes**: Users can view, edit, and delete existing recipes. They can also copy recipe details to the clipboard.
 
 ## Folder Structure
-- `recipes_manager.py`: Main application file containing the code for Recipes Manager.
-- `README.md`: Readme file with instructions for installation and usage.
-- `requirements.txt`: File containing the list of required dependencies.
+- `app.py`: Main application file containing the code for Recipes Manager.
 
 ## Credits
-This application is developed by [Your Name] and is open-source. Contributions and feedback are welcome.
+This application is developed by Boketto and is open-source. Contributions and feedback are welcome.
 
 **Note**: Replace `[Your Name]` with your name or organization name.
