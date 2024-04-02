@@ -40,6 +40,5 @@ Recipes Manager is a desktop application built using Python and Tkinter framewor
 - `requirements.txt`: File containing the list of required dependencies.
 
 ## Credits
-This application is developed by [Your Name] and is open-source. Contributions and feedback are welcome.
+This application is developed by Anass and is open-source. Contributions and feedback are welcome.
 
-**Note**: Replace `[Your Name]` with your name or organization name.
